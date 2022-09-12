@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:uber_clone_flutter/pages/home/home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomeController _con = new HomeController();
 
   @override
   Widget build(BuildContext context) {
+    _con.init(context); // Initialization of controller
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -22,11 +24,11 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 50),
               _textSelectYourRol(),
               SizedBox(height: 30),
-              _imageTypeUser('assets/img/pasajero.png'),
+              _imageTypeUser(context, 'assets/img/pasajero.png'),
               SizedBox(height: 10),
               _textTypeUser('Cliente'),
               SizedBox(height: 30),
-              _imageTypeUser('assets/img/driver.png'),
+              _imageTypeUser(context, 'assets/img/driver.png'),
               SizedBox(height: 10),
               _textTypeUser('Conductor')
             ],
@@ -71,11 +73,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _imageTypeUser(String image) {
-    return CircleAvatar(
-      backgroundImage: AssetImage(image),
-      radius: 50,
-      backgroundColor: Colors.grey[900],
+  Widget _imageTypeUser(BuildContext context, String image) {
+    return GestureDetector(
+      onTap: _con.goToLoginPage,
+      child: CircleAvatar(
+        backgroundImage: AssetImage(image),
+        radius: 50,
+        backgroundColor: Colors.grey[900],
+      ),
     );
   }
 
