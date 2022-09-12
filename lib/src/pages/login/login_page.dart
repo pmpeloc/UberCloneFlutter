@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               _textDescription(),
               _textLogin(),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.17,
+                height: MediaQuery.of(context).size.height * 0.12,
               ),
               _textFieldEmail(),
               _textFieldPassword(),
