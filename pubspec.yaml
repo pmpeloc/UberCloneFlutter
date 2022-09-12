@@ -90,5 +90,21 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico/Pacifico.ttf
+    - family: Roboto
+      fonts:
+          - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+    - family: RobotoMedium
+      fonts:
+          - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+    - family: NimbusSans
+      fonts:
+          - asset: assets/fonts/NimbusSans/NimbusSanL-Reg.otf
+    - family: OneDay
+      fonts:
+          - asset: assets/fonts/OneDay/ONEDAY.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
