@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fares.ubercloneflutter.uber_clone_flutter">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="uber_clone_flutter"
         android:name="${applicationName}"
