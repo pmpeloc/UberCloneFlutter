@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uber_clone_flutter/utils/colors.dart' as utils;
+import 'package:uber_clone_flutter/src/pages/login/login_controller.dart';
+import 'package:uber_clone_flutter/src/utils/colors.dart' as utils;
+import 'package:uber_clone_flutter/src/widgets/button_app.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,21 +15,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginController _con = new LoginController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            _bannerApp(),
-            _textDescription(),
-            _textLogin(),
-            Expanded(child: Container()),
-            _textFieldEmail(),
-            _textFieldPassword(),
-            _buttonLogin(),
-            _textDontHaveAccount()
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _bannerApp(),
+              _textDescription(),
+              _textLogin(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.17,
+              ),
+              _textFieldEmail(),
+              _textFieldPassword(),
+              _buttonLogin(),
+              _textDontHaveAccount()
+            ],
+          ),
         ));
   }
 
@@ -42,19 +60,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buttonLogin() {
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text('Iniciar Sesión'),
-      ),
-    );
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+        child: ButtonApp(
+            onPressed: _con.login,
+            color: utils.Colors.uberCloneColor,
+            text: 'Iniciar Sesión'));
   }
 
   Widget _textFieldEmail() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
+        controller: _con.emailController,
         decoration: InputDecoration(
             hintText: 'mail@mail.com',
             labelText: 'Correo Electrónico',
@@ -70,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: TextField(
+        controller: _con.passwordController,
         obscureText: true,
         decoration: InputDecoration(
             labelText: 'Contraseña',

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:uber_clone_flutter/pages/home/home_page.dart';
-import 'package:uber_clone_flutter/pages/login/login_page.dart';
-import 'package:uber_clone_flutter/utils/colors.dart' as utils;
+import 'package:uber_clone_flutter/src/pages/home/home_page.dart';
+import 'package:uber_clone_flutter/src/pages/login/login_page.dart';
+import 'package:uber_clone_flutter/src/utils/colors.dart' as utils;
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           elevation: 0
         ),
         primarySwatch: createThemeSwatch(utils.Colors.uberCloneColor),
-        // primaryColor: utils.Colors.uberCloneColor,
+        // primaryColor: src.utils.Colors.uberCloneColor,
       ),
       routes: {
         'home': (BuildContext context) => HomePage(),
