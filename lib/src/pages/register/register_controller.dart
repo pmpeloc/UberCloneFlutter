@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:uber_clone_flutter/src/models/client.dart';
 import 'package:uber_clone_flutter/src/providers/auth_provider.dart';
 import 'package:uber_clone_flutter/src/providers/client_provider.dart';
+import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
 
 class RegisterController {
   BuildContext? context;
+  GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -27,15 +29,15 @@ class RegisterController {
     String password = passwordController.text.trim();
     String passwordConfirm = passwordConfirmController.text.trim();
     if (username.isEmpty && email.isEmpty && password.isEmpty && passwordConfirm.isEmpty) {
+      utils.Snackbar.showSnackbar(context!, key, 'Debes ingresar todos los campos');
       return;
     }
     if (passwordConfirm != password) {
+      utils.Snackbar.showSnackbar(context!, key, 'Las contraseñas no coinciden');
       return;
     }
     if (password.length < 6) {
-      if (kDebugMode) {
-        print('Password length is invalid');
-      }
+      utils.Snackbar.showSnackbar(context!, key, 'El password debe tener al menos 6 caracteres');
       return;
     }
     try {
@@ -59,6 +61,7 @@ class RegisterController {
         }
       }
     } catch (error) {
+      utils.Snackbar.showSnackbar(context!, key, 'Error: $error');
       if (kDebugMode) {
         print(error);
       }
