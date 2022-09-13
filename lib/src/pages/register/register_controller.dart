@@ -2,17 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone_flutter/src/providers/auth_provider.dart';
 
-class LoginController {
+class RegisterController {
   BuildContext? context;
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmController = TextEditingController();
 
   AuthProvider? _authProvider;
 
   Future? init (BuildContext context) {
     this.context = context;
-    _authProvider = new AuthProvider();
+    _authProvider = AuthProvider();
   }
 
   void login() async {
@@ -37,9 +39,5 @@ class LoginController {
         print(error);
       }
     }
-  }
-
-  void goToRegisterPage() {
-    Navigator.pushNamed(context!, 'register');
   }
 }

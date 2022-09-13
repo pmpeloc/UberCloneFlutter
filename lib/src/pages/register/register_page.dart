@@ -3,19 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uber_clone_flutter/src/pages/login/login_controller.dart';
+import 'package:uber_clone_flutter/src/pages/register/register_controller.dart';
 import 'package:uber_clone_flutter/src/utils/colors.dart' as utils;
 import 'package:uber_clone_flutter/src/widgets/button_app.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  LoginController _con = new LoginController();
+class _RegisterPageState extends State<RegisterPage> {
+  RegisterController _con = new RegisterController();
 
   @override
   void initState() {
@@ -34,40 +34,24 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               _bannerApp(),
-              _textDescription(),
-              _textLogin(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.12,
-              ),
+              _textRegister(),
+              _textFieldUsername(),
               _textFieldEmail(),
               _textFieldPassword(),
-              _buttonLogin(),
-              _textDontHaveAccount()
+              _textFieldConfirmPassword(),
+              _buttonRegister(),
             ],
           ),
         ));
   }
 
-  Widget _textDontHaveAccount() {
-    return GestureDetector(
-      onTap: _con.goToRegisterPage,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 50),
-        child: Text(
-          'No tienes cuenta?',
-          style: TextStyle(fontSize: 15, color: Colors.grey),
-        ),
-      ),
-    );
-  }
-
-  Widget _buttonLogin() {
+  Widget _buttonRegister() {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         child: ButtonApp(
             onPressed: _con.login,
             color: utils.Colors.uberCloneColor,
-            text: 'Iniciar Sesión'));
+            text: 'Crear Cuenta'));
   }
 
   Widget _textFieldEmail() {
@@ -80,6 +64,22 @@ class _LoginPageState extends State<LoginPage> {
             labelText: 'Correo Electrónico',
             suffixIcon: Icon(
               Icons.email_outlined,
+              color: utils.Colors.uberCloneColor,
+            )),
+      ),
+    );
+  }
+
+  Widget _textFieldUsername() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: TextField(
+        controller: _con.usernameController,
+        decoration: InputDecoration(
+            hintText: 'John Doe',
+            labelText: 'Nombre de Usuario',
+            suffixIcon: Icon(
+              Icons.person_outlined,
               color: utils.Colors.uberCloneColor,
             )),
       ),
@@ -102,26 +102,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _textLogin() {
+  Widget _textFieldConfirmPassword() {
     return Container(
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      child: Text(
-        'Login',
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 28),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      child: TextField(
+        controller: _con.passwordConfirmController,
+        obscureText: true,
+        decoration: InputDecoration(
+            labelText: 'Repita la Contraseña',
+            suffixIcon: Icon(
+              Icons.lock_open_outlined,
+              color: utils.Colors.uberCloneColor,
+            )),
       ),
     );
   }
 
-  Widget _textDescription() {
+  Widget _textRegister() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: Text(
-        'Continua con tu',
+        'REGISTRO',
         style: TextStyle(
-            color: Colors.black54, fontSize: 24, fontFamily: 'NimbusSans'),
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
       ),
     );
   }
