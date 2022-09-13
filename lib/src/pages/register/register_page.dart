@@ -49,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         child: ButtonApp(
-            onPressed: _con.login,
+            onPressed: _con.register,
             color: utils.Colors.uberCloneColor,
             text: 'Crear Cuenta'));
   }

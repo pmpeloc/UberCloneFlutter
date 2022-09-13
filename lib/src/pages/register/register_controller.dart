@@ -17,21 +17,32 @@ class RegisterController {
     _authProvider = AuthProvider();
   }
 
-  void login() async {
+  void register() async {
+    String username = emailController.text;
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
-    if (kDebugMode) {
-      print({email, password});
+    String passwordConfirm = passwordConfirmController.text.trim();
+    if (username.isEmpty && email.isEmpty && password.isEmpty && passwordConfirm.isEmpty) {
+      return;
+    }
+    if (passwordConfirm != password) {
+      return;
+    }
+    if (password.length < 6) {
+      if (kDebugMode) {
+        print('Password length is invalid');
+      }
+      return;
     }
     try {
-      bool? isLogin = await _authProvider?.login(email, password);
-      if (isLogin == true) {
+      bool? isRegister = await _authProvider?.register(email, password);
+      if (isRegister == true) {
         if (kDebugMode) {
-          print('Login success');
+          print('Register success');
         }
       } else {
         if (kDebugMode) {
-          print('Login fail');
+          print('Register fail');
         }
       }
     } catch (error) {
