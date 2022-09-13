@@ -1,38 +1,49 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:uber_clone_flutter/src/providers/auth_provider.dart';
+import 'package:uber_clone_flutter/src/utils/my_progress_dialog.dart';
+import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
 
 class LoginController {
   BuildContext? context;
+  GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   AuthProvider? _authProvider;
+  ProgressDialog? _progressDialog;
 
   Future? init (BuildContext context) {
     this.context = context;
-    _authProvider = new AuthProvider();
+    _authProvider = AuthProvider();
+    _progressDialog = MyProgressDialog.createProgressDialog(context, 'Espere un momento...');
   }
 
   void login() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
-    if (kDebugMode) {
-      print({email, password});
-    }
+    _progressDialog = MyProgressDialog.createProgressDialog(context!, 'Espere un momento...');
+    _progressDialog?.show();
     try {
       bool? isLogin = await _authProvider?.login(email, password);
       if (isLogin == true) {
         if (kDebugMode) {
           print('Login success');
         }
+        _progressDialog?.hide();
+        utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
       } else {
         if (kDebugMode) {
           print('Login fail');
         }
+        _progressDialog?.hide();
+        utils.Snackbar.showSnackbar(context!, key, 'Email y/o contraseña incorrectos.');
       }
     } catch (error) {
+      _progressDialog?.hide();
+      utils.Snackbar.showSnackbar(context!, key, 'Error: $error');
       if (kDebugMode) {
         print(error);
       }

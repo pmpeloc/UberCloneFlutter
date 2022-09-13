@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^3.8.0
   firebase_core: ^1.22.0
   cloud_firestore: ^3.4.7
+  progress_dialog_null_safe: ^1.0.4
 
 dev_dependencies:
   flutter_test:
