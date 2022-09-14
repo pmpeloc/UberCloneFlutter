@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class AuthProvider {
   FirebaseAuth? _firebaseAuth;
@@ -10,6 +11,19 @@ class AuthProvider {
 
   User? getUser() {
     return _firebaseAuth?.currentUser;
+  }
+
+  void checkIfUserIsLogged(BuildContext context, String typeUser) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      // User is logged
+      if (user != null && typeUser != null) {
+        if (typeUser == 'client') {
+          Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context, 'driver/map', (route) => false);
+        }
+      }
+    });
   }
 
   Future<bool> login(String email, String password) async {

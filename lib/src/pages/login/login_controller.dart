@@ -39,6 +39,11 @@ class LoginController {
         }
         _progressDialog?.hide();
         utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
+        if (_typeUser == 'client') {
+          Navigator.pushNamedAndRemoveUntil(context!, 'client/map', (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context!, 'driver/map', (route) => false);
+        }
       } else {
         if (kDebugMode) {
           print('Login fail');

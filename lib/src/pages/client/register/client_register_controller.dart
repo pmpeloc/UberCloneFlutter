@@ -63,6 +63,7 @@ class ClientRegisterController {
 
         await _clientProvider?.create(client);
         _progressDialog?.hide();
+        Navigator.pushNamedAndRemoveUntil(context!, 'client/map', (route) => false);
         utils.Snackbar.showSnackbar(context!, key, 'Usuario creado correctamente.');
       } else {
         _progressDialog?.hide();
