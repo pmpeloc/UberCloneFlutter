@@ -6,6 +6,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uber_clone_flutter/src/pages/driver/register/driver_register_controller.dart';
 import 'package:uber_clone_flutter/src/utils/colors.dart' as utils;
 import 'package:uber_clone_flutter/src/widgets/button_app.dart';
+import 'package:uber_clone_flutter/src/utils/otp_widget.dart';
 
 class DriverRegisterPage extends StatefulWidget {
   const DriverRegisterPage({Key? key}) : super(key: key);
@@ -36,6 +37,18 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
             children: [
               _bannerApp(),
               _textRegister(),
+              _textLicencePlate(),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                child: OTPFields(
+                  pin1: _con.pin1Controller,
+                  pin2: _con.pin2Controller,
+                  pin3: _con.pin3Controller,
+                  pin4: _con.pin4Controller,
+                  pin5: _con.pin5Controller,
+                  pin6: _con.pin6Controller,
+                ),
+              ),
               _textFieldUsername(),
               _textFieldEmail(),
               _textFieldPassword(),
@@ -53,6 +66,16 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
             onPressed: _con.register,
             color: utils.Colors.uberCloneColor,
             text: 'Crear Cuenta'));
+  }
+
+  Widget _textLicencePlate() {
+    return Container(
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.symmetric(horizontal: 30),
+        child: Text(
+          'Patente del Vehículo',
+          style: TextStyle(color: Colors.grey[600], fontSize: 17),
+        ));
   }
 
   Widget _textFieldEmail() {
@@ -124,7 +147,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: Text(
-        'REGISTRO DE CONDUCTOR',
+        'REGISTRO',
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
       ),
