@@ -1,9 +1,5 @@
 import 'dart:convert';
 
-Driver driverFromJson(String str) => Driver.fromJson(json.decode(str));
-
-String driverToJson(Driver data) => json.encode(data.toJson());
-
 class Driver {
   String id;
   String username;
@@ -33,4 +29,8 @@ class Driver {
     "email": email,
     "plate": plate,
   };
+
+  Driver driverFromJson(String str) => Driver.fromJson(json.decode(str));
+
+  String driverToJson(Driver data) => json.encode(data.toJson());
 }

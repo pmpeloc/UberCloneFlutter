@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  LoginController _con = new LoginController();
+  final LoginController _con = LoginController();
 
   @override
   void initState() {

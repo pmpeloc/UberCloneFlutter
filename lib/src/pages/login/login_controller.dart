@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:uber_clone_flutter/src/models/client.dart';
+import 'package:uber_clone_flutter/src/models/driver.dart';
 import 'package:uber_clone_flutter/src/providers/auth_provider.dart';
+import 'package:uber_clone_flutter/src/providers/client_provider.dart';
+import 'package:uber_clone_flutter/src/providers/driver_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_progress_dialog.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
@@ -15,6 +19,9 @@ class LoginController {
 
   AuthProvider? _authProvider;
   ProgressDialog? _progressDialog;
+  DriverProvider? _driverProvider;
+  ClientProvider? _clientProvider;
+
   SharedPref? _sharedPref;
   late String _typeUser;
 
@@ -24,6 +31,8 @@ class LoginController {
     _progressDialog = MyProgressDialog.createProgressDialog(context, 'Espere un momento...');
     _sharedPref = SharedPref();
     _typeUser = await _sharedPref!.read('typeUser');
+    _driverProvider = DriverProvider();
+    _clientProvider = ClientProvider();
   }
 
   void login() async {
@@ -38,11 +47,30 @@ class LoginController {
           print('Login success');
         }
         _progressDialog?.hide();
-        utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
         if (_typeUser == 'client') {
-          Navigator.pushNamedAndRemoveUntil(context!, 'client/map', (route) => false);
-        } else {
+          Client? client = await _clientProvider!.getById(_authProvider!.getUser()!.uid);
+          if (client != null) {
+            utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
+            Navigator.pushNamedAndRemoveUntil(context!, 'client/map', (route) => false);
+          } else {
+            utils.Snackbar.showSnackbar(context!, key, 'El usuario no es válido.');
+            await _authProvider!.signOut();
+          }
+        } else if (_typeUser == 'driver') {
+          print('es un driver');
+          utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
           Navigator.pushNamedAndRemoveUntil(context!, 'driver/map', (route) => false);
+          // Driver driver = Driver.fromJson({"plate": "WSR-589", "id": "12zyWdNWgvXlJxJXuWQc5a0gWKH2", "email": "test3@mail.com", "username": "test3@mail.com"});
+          // print('Driver: $driver');
+          // if (driver != null) {
+          //   print('no es null driver');
+          //   utils.Snackbar.showSnackbar(context!, key, 'Inicio de sesión exitoso.');
+          //   Navigator.pushNamedAndRemoveUntil(context!, 'driver/map', (route) => false);
+          // } else {
+          //   print('es null driver');
+          //   utils.Snackbar.showSnackbar(context!, key, 'El usuario no es válido.');
+          //   await _authProvider!.signOut();
+          // }
         }
       } else {
         if (kDebugMode) {

@@ -35,7 +35,7 @@ class DriverRegisterController {
   }
 
   void register() async {
-    String username = emailController.text;
+    String username = usernameController.text.trim();
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String passwordConfirm = passwordConfirmController.text.trim();

@@ -19,7 +19,7 @@ class AuthProvider {
       if (user != null && typeUser != null) {
         if (typeUser == 'client') {
           Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
-        } else {
+        } else if (typeUser == 'driver') {
           Navigator.pushNamedAndRemoveUntil(context, 'driver/map', (route) => false);
         }
       }
@@ -52,5 +52,9 @@ class AuthProvider {
       errorMessage = error.code;
       return false;
     }
+  }
+
+  Future signOut() async {
+    return Future.wait([_firebaseAuth!.signOut()]);
   }
 }
