@@ -7,7 +7,7 @@ import 'package:uber_clone_flutter/src/providers/client_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_progress_dialog.dart';
 import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
 
-class RegisterController {
+class ClientRegisterController {
   BuildContext? context;
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
 

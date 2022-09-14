@@ -3,19 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uber_clone_flutter/src/pages/register/register_controller.dart';
+import 'package:uber_clone_flutter/src/pages/driver/register/driver_register_controller.dart';
 import 'package:uber_clone_flutter/src/utils/colors.dart' as utils;
 import 'package:uber_clone_flutter/src/widgets/button_app.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class DriverRegisterPage extends StatefulWidget {
+  const DriverRegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<DriverRegisterPage> createState() => _DriverRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  RegisterController _con = new RegisterController();
+class _DriverRegisterPageState extends State<DriverRegisterPage> {
+  final DriverRegisterController _con = DriverRegisterController();
 
   @override
   void initState() {
@@ -124,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: Text(
-        'REGISTRO',
+        'REGISTRO DE CONDUCTOR',
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
       ),

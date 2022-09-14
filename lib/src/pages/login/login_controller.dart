@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:uber_clone_flutter/src/providers/auth_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_progress_dialog.dart';
+import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
 
 class LoginController {
@@ -14,11 +15,15 @@ class LoginController {
 
   AuthProvider? _authProvider;
   ProgressDialog? _progressDialog;
+  SharedPref? _sharedPref;
+  late String _typeUser;
 
-  Future? init (BuildContext context) {
+  Future? init (BuildContext context) async {
     this.context = context;
     _authProvider = AuthProvider();
     _progressDialog = MyProgressDialog.createProgressDialog(context, 'Espere un momento...');
+    _sharedPref = SharedPref();
+    _typeUser = await _sharedPref!.read('typeUser');
   }
 
   void login() async {
@@ -51,6 +56,10 @@ class LoginController {
   }
 
   void goToRegisterPage() {
-    Navigator.pushNamed(context!, 'register');
+    if (_typeUser == 'client') {
+      Navigator.pushNamed(context!, 'client/register');
+    } else {
+      Navigator.pushNamed(context!, 'driver/register');
+    }
   }
 }
