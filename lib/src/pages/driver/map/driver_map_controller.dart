@@ -8,19 +8,25 @@ import 'package:uber_clone_flutter/src/utils/snackbar.dart' as utils;
 
 class DriverMapController {
   late BuildContext context;
+  late Function refresh;
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  Completer<GoogleMapController> _mapController = Completer();
+  final Completer<GoogleMapController> _mapController = Completer();
 
   late Position _position;
   late StreamSubscription<Position> _positionStream;
+
+  late BitmapDescriptor markerDriver;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   CameraPosition initialPosition = const CameraPosition(
     target: LatLng(-24.3825782,-65.1139832),
     zoom: 14.0
   );
 
-  Future init(BuildContext context) async {
+  Future init(BuildContext context, Function refresh) async {
     this.context = context;
+    this.refresh = refresh;
+    markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
     checkGPS();
   }
 
@@ -34,6 +40,8 @@ class DriverMapController {
       await _determinePosition();
       _position = (await Geolocator.getLastKnownPosition())!;
       centerPosition();
+      addMarker('driver', _position.latitude, _position.longitude, 'Tu posición', '', markerDriver);
+      refresh();
       LocationSettings locationSettings = const LocationSettings(
         accuracy: LocationAccuracy.best,
         distanceFilter: 1,
@@ -42,7 +50,9 @@ class DriverMapController {
         locationSettings: locationSettings,
       ).listen((position) {
         _position = position;
+        addMarker('driver', _position.latitude, _position.longitude, 'Tu posición', '', markerDriver);
         animatedCameraToPosition(_position.latitude, _position.longitude);
+        refresh();
       });
     } catch (error) {
       print('Error en la localización: $error');
@@ -117,5 +127,23 @@ class DriverMapController {
         )
       ));
     }
+  }
+
+  Future<BitmapDescriptor> createMarkerImageFromAsset(String path) async {
+    ImageConfiguration configuration = const ImageConfiguration();
+    BitmapDescriptor bitmapDescriptor = await BitmapDescriptor.fromAssetImage(configuration, path);
+    return bitmapDescriptor;
+  }
+
+  void addMarker(String markerId, double lat, double lng, String title, String content, BitmapDescriptor iconMarker) {
+    MarkerId id = MarkerId(markerId);
+    print('MARKER ID: $id.markerId');
+    Marker marker = Marker(
+      markerId: id,
+      icon: iconMarker,
+      position: LatLng(lat, lng),
+      infoWindow: InfoWindow(title: title, snippet: content)
+    );
+    markers[id] = marker;
   }
 }

@@ -19,7 +19,7 @@ class _DriverMapPageState extends State<DriverMapPage> {
     // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _con.init(context);
+      _con.init(context, refresh);
     });
   }
 
@@ -98,8 +98,13 @@ class _DriverMapPageState extends State<DriverMapPage> {
       mapType: MapType.normal,
       initialCameraPosition: _con.initialPosition,
       onMapCreated: _con.onMapCreated,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
+      myLocationEnabled: false,
+      myLocationButtonEnabled: false,
+      markers: Set<Marker>.of(_con.markers.values),
     );
+  }
+
+  void refresh() {
+    setState(() {});
   }
 }
