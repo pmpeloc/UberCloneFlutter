@@ -137,12 +137,16 @@ class DriverMapController {
 
   void addMarker(String markerId, double lat, double lng, String title, String content, BitmapDescriptor iconMarker) {
     MarkerId id = MarkerId(markerId);
-    print('MARKER ID: $id.markerId');
     Marker marker = Marker(
       markerId: id,
       icon: iconMarker,
       position: LatLng(lat, lng),
-      infoWindow: InfoWindow(title: title, snippet: content)
+      infoWindow: InfoWindow(title: title, snippet: content),
+      draggable: false,
+      zIndex: 2,
+      flat: true,
+      anchor: const Offset(0.5, 0.5),
+      rotation: _position.heading,
     );
     markers[id] = marker;
   }
